@@ -32,6 +32,7 @@ class App {
             System.out.println("0 - выйти из программы");
             System.out.println("1 - добавть ресурс");
             System.out.println("2 - список ресурсов");
+            System.out.println("3 - удаление ресурса");
             Scanner scanner = new Scanner(System.in);
             int task = scanner.nextInt();
             scanner.nextLine();
@@ -58,6 +59,16 @@ class App {
                     for(Resource r : listResourse){
                         System.out.println(r.toString());
                     }
+                    break;
+                case 3:
+                    System.out.println("Выбрана задача 3");
+                    int i =1;
+                    for(Resource r : listResourse) {
+                        System.out.printf("%d. $s ",i,r.getName());
+                    }
+                    System.out.println("Выберите номер ресурса для удаления");
+                    int numDeleteResource = scanner.nextInt();
+                    scanner.nextLine();
                     break;
             }       
         }while(!"q".equals(repeat));
