@@ -5,7 +5,9 @@
  */
 package jptvr18passmanager;
 
-import entity.Resourse;
+import classes.NewResource;
+import classes.SaveToFile;
+import entity.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +17,13 @@ import java.util.Scanner;
  * @author pupil
  */
 class App {
-    private List<Resourse> listResourse = new ArrayList<>();
+    private List<Resource> listResourse = new ArrayList<>();
+    private SaveToFile saveToFile = new SaveToFile();
+    
+    public App() {
+        listResourse.addAll(saveToFile.loadListResources());
+    }
+    
     public void run(){
             System.out.println("--- Менеджер паролей ---");
             String repeat = "r";
@@ -34,17 +42,20 @@ class App {
                     break;
                 case 1:
                     System.out.println("Выбрана задача 1");
-                    Resourse resource = new Resourse();
-                    resource.setName("ivkhk");
-                    resource.setUrl("http://kutsehariduskeskus.ee");
-                    resource.setLogin("admin");
-                    resource.setPassword("12345");
-                    listResourse.add(resource);
+//                    Resource resource = new Resource();
+//                    resource.setName("ivkhk");
+//                    resource.setUrl("http://kutsehariduskeskus.ee");
+//                    resource.setLogin("admin");
+//                    resource.setPassword("12345");
+                    NewResource newResource = new NewResource();                  
+                    listResourse.add(newResource.createResource());
+                    SaveToFile saveToFile = new SaveToFile();
+                    saveToFile.saveResource(listResourse);
                     break;
                 case 2:
                     System.out.println("Выбрана задача 2");
                     System.out.println("Список ресурсов:");
-                    for(Resourse r : listResourse){
+                    for(Resource r : listResourse){
                         System.out.println(r.toString());
                     }
                     break;

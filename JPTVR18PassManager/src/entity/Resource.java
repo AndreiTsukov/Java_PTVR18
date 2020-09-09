@@ -5,22 +5,23 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author pupil
  */
-public class Resourse {
+public class Resource implements Serializable{
     private String name;
     private String url;
     private String login;
     private String password;
 
-    public Resourse() {
+    public Resource() {
     }
 
-    public Resourse(String name, String url, String login, String password) {
+    public Resource(String name, String url, String login, String password) {
         this.name = name;
         this.url = url;
         this.login = login;
@@ -80,7 +81,7 @@ public class Resourse {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Resourse other = (Resourse) obj;
+        final Resource other = (Resource) obj;
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
