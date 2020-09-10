@@ -6,8 +6,10 @@
 package jptvr18passmanager;
 
 import classes.NewResource;
+import classes.NewUser;
 import classes.SaveToFile;
 import entity.Resource;
+import entity.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,11 +19,13 @@ import java.util.Scanner;
  * @author pupil
  */
 class App {
-    private List<Resource> listResourse = new ArrayList<>();
+    private List<Resource> listResource = new ArrayList<>();
+    private List<User> listUser = new ArrayList<>();
     private SaveToFile saveToFile = new SaveToFile();
     
     public App() {
-        listResourse.addAll(saveToFile.loadListResources());
+        listResource.addAll(saveToFile.loadListResource());
+        listUser.addAll(saveToFile.loadListUser());
     }
     
     public void run(){
@@ -33,42 +37,74 @@ class App {
             System.out.println("1 - добавть ресурс");
             System.out.println("2 - список ресурсов");
             System.out.println("3 - удаление ресурса");
+            System.out.println("4 - добавить пользователя");
+            System.out.println("5 - список пользователей");
+            System.out.println("6 - удаление пользователя");
             Scanner scanner = new Scanner(System.in);
-            int task = scanner.nextInt();
+             int Task = scanner.nextInt();
             scanner.nextLine();
-            switch (task) {
+                switch (Task) {
                 case 0:
                     repeat = "q";
-
                     break;
                 case 1:
                     System.out.println("Выбрана задача 1");
-//                    Resource resource = new Resource();
-//                    resource.setName("ivkhk");
-//                    resource.setUrl("http://kutsehariduskeskus.ee");
-//                    resource.setLogin("admin");
-//                    resource.setPassword("12345");
+                    System.out.println("Добавить ресурса:");
                     NewResource newResource = new NewResource();                  
-                    listResourse.add(newResource.createResource());
-                    SaveToFile saveToFile = new SaveToFile();
-                    saveToFile.saveResource(listResourse);
+                    listResource.add(newResource.createResource());
+                    saveToFile.saveResource(listResource);
                     break;
                 case 2:
                     System.out.println("Выбрана задача 2");
                     System.out.println("Список ресурсов:");
-                    for(Resource r : listResourse){
+                    for(Resource r : listResource){
                         System.out.println(r.toString());
                     }
                     break;
                 case 3:
                     System.out.println("Выбрана задача 3");
+                    System.out.println("Удаление ресурса:");
                     int i =1;
-                    for(Resource r : listResourse) {
-                        System.out.printf("%d. $s ",i,r.getName());
+                    for(Resource r : listResource) {
+                        System.out.printf("%d. %s %n",i,r.getName());
+                        i++;
                     }
                     System.out.println("Выберите номер ресурса для удаления");
                     int numDeleteResource = scanner.nextInt();
                     scanner.nextLine();
+                    listResource.remove(numDeleteResource - 1);
+                    this.saveToFile.saveResource(listResource);
+                    break;
+                case 4:
+                    System.out.println("Выбрана задача 4");
+                    System.out.println("Добавить пользователя:");
+                    NewUser newUser = new NewUser();                  
+                    listUser.add(newUser.createUser());
+                    saveToFile.saveUser(listUser);
+                    break;
+                case 5:
+                    System.out.println("Выбрана задача 5");
+                    System.out.println("Список пользователей:");
+                    for(User r : listUser){
+                        System.out.println(r.toString());
+                    }
+                    break;
+                case 6:
+                    System.out.println("Выбрана задача 6");
+                    System.out.println("Удаление пользователя:");
+                    int u =1;
+                    for(User r : listUser) {
+                        System.out.printf("%d. %s %n",u,r.getFname());
+                        u++;
+                    }
+                    System.out.println("Выберите номер ресурса для удаления");
+                    int numDeleteUser = scanner.nextInt();
+                    scanner.nextLine();
+                    listUser.remove(numDeleteUser - 1);
+                    saveToFile.saveUser(listUser);
+                    break;
+                default:
+                    System.out.println("Выберите задачу");
                     break;
             }       
         }while(!"q".equals(repeat));

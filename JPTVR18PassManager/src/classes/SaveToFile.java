@@ -6,6 +6,7 @@
 package classes;
 
 import entity.Resource;
+import entity.User;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -52,7 +53,7 @@ public class SaveToFile {
             }
         }
     }
-    public List<Resource> loadListResources(){
+    public List<Resource> loadListResource(){
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
         try {
@@ -66,7 +67,54 @@ public class SaveToFile {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SaveToFile.class.getName()).log(Level.SEVERE, "Нет нужного класса", ex);
         }
+        return new ArrayList<>();
+    }
+    
+    
+    public void saveUser(List<User> listUser) {
+        FileOutputStream fileOutputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream("listUser");
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(listUser);
+            objectOutputStream.flush();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SaveToFile.class.getName()).log(Level.SEVERE, "Файла не существует", ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SaveToFile.class.getName()).log(Level.SEVERE, "Ошибка вводв/вывода", ex);
+        }
+        finally{
+            if(objectOutputStream != null) {
+                try {
+                    objectOutputStream.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(SaveToFile.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (fileOutputStream != null) {
+                try {
+                    fileOutputStream.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(SaveToFile.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    public List<User> loadListUser(){
+        FileInputStream fileInputStream = null;
+        ObjectInputStream objectInputStream = null;
+        try {
+            fileInputStream = new FileInputStream("listUser");
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            return (List<User>) objectInputStream.readObject();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SaveToFile.class.getName()).log(Level.SEVERE, "Файла не существует", ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SaveToFile.class.getName()).log(Level.SEVERE, "Ошибка чтения файла", ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SaveToFile.class.getName()).log(Level.SEVERE, "Нет нужного класса", ex);
+        }
         return new ArrayList<>(); 
-        
     }
 }
