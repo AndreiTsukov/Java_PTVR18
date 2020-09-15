@@ -6,6 +6,7 @@
 package WebController;
 
 import entity.Resource;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import session.ResourceFacade;
+import session.UserFacade;
 
 /**
  *
@@ -22,7 +24,9 @@ import session.ResourceFacade;
  */
 @WebServlet(name = "ResourceController", urlPatterns = {
     "/showFormAddResource",
+    "/showFormAddUser",
     "/createResourse",
+    "/createUser",
     "/listResources",
     "/deleteRecource",
     "/showEditResource",
@@ -31,6 +35,8 @@ import session.ResourceFacade;
 public class ResourceController extends HttpServlet {
     @EJB
     private ResourceFacade resourceFacade;
+    @EJB
+    private UserFacade userFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -61,6 +67,21 @@ public class ResourceController extends HttpServlet {
                 request.getRequestDispatcher("/index.jsp")
                         .forward(request, response);
                 break;
+            case "/showFormAddUser":
+                request.getRequestDispatcher("/showFormAddUser.jsp")
+                        .forward(request, response);
+                break;
+            case "/createUser":
+                String Uname = request.getParameter("name");
+                String Ulogin = request.getParameter("login");
+                String Upassword = request.getParameter("password");
+                User user = new User(Uname, Ulogin, Upassword);
+                userFacade.create(user);
+                request.setAttribute("info", "Пользователь \""
+                        + user.getName()+"\" создан");
+                request.getRequestDispatcher("/index.jsp")
+                        .forward(request, response);
+                break;
             case "/listResources":
                 
                 break;
@@ -72,8 +93,7 @@ public class ResourceController extends HttpServlet {
                 break;
             case "/updateResource":
                 
-                break;
-            
+                break;  
         }
         //request.setAttribute("info","Эта информация сформирована java");
         //request.getRequestDispatcher("/page1.jsp").forward(request,);

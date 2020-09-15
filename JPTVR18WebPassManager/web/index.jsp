@@ -15,6 +15,7 @@
         <h1>Добро пожаловать в менеджер паролей!</h1>
         <p>${info}</p>
         <a href="showFormAddResource">Добавить новый ресурс</a><br>
+        <a href="showFormAddUser">Добавить нового пользователя</a><br>
         <a href="listResources">Список ресурсов</a><br>
     </body>
 </html>
